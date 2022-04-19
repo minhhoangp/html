@@ -7,18 +7,8 @@ function fetchPersonalMsg(){
             return response.json();
         })
         .then(data =>{
-            // const html = data.data.map(user =>{
-            //     return `
-            //     <div class="user">
-            //         <p>Name: ${user.first_name}</p>
-            //         <p>Email: ${user.email}</p>
-            //     </div>
-            //     `;
-            // })
-            // .join("")
-
             const name = data.data.first_name
-            const message = `Good (time of day), ${name}. You are on a streak of (days)!`;
+            const message = `<p>Good (time of day), ${name}. You are on a streak of (days)!<\p>`;
 
             document.querySelector(".personal").insertAdjacentHTML("beforeend", message);
         }).catch(error => {
@@ -36,7 +26,7 @@ function fetchUnreadCliName(){
         })
         .then(data =>{
             const name = data.data.last_name
-            const notification = `(Title).${name} sent you a message at (time)`;
+            const notification = `<p>(Title).${name} sent you a message at (time)<\p>`;
 
             document.querySelector(".unread").insertAdjacentHTML("beforeend", notification);
         }).catch(error => {
@@ -54,7 +44,7 @@ function fetchUnreadMsg(){
         })
         .then(data =>{
             const name = data.data.email
-            const message = `<div class="collapsible-message"> Hi, my email is ${name}. Have a good day </div>
+            const message = `<div class="collapsible-message"><p> Hi, my email is ${name}. Have a good day <\p></div>
             `;
 
             document.querySelector(".unread").insertAdjacentHTML("afterend", message);
@@ -74,9 +64,13 @@ function fetchLeaderboardData(){
         .then(data =>{
             const users = data.data.map(user =>{
                 return `
-                <div class="user">
-                    <p>Name: ${user.first_name}</p>
-                    <p>Rate: ${user.id}</p>
+                <div class="user rank-widget">
+                    <div class= "user-info">
+                        <h3>${user.first_name}</h3>
+                        <p>New memeber</p>
+                        <div class="progress"></div>
+                    </div>
+                    <h2 class="percentage">${user.id*5}%</h2>
                 </div>
                 `;
             })
